@@ -10,17 +10,34 @@ This project is a [_fastlane_](https://github.com/fastlane/fastlane) plugin. To 
 fastlane add_plugin screenshot_notifier
 ```
 
+This plugin depends Firebase Cloud Storage to store snapshots. If you don't have a Firebase account, see [this](https://github.com/cats-oss/fastlane-plugin-firebase_test_lab_android#if-you-are-not-current-user-of-firebase) and create a bucket.
+
 ## About screenshot_notifier
 
 Post screenshots to a pull request
-
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
 
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
 
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
+In case of `screenshot_dir` like below,
+
+```
+.screenshot
+  ├ Nexus6
+  |  ├ MainPage.jpg
+  |  └ SubPage.jpg
+  └ Nexus6P
+     ├ MainPage.jpg
+     └ SubPage.jpg
+```
+
+this plugin generates following table of screenshots.
+
+| Screen Name | Nexus6 | Nexus6P |
+| --- | --- | --- |
+| MainPage.jpg | (Screenshot) | (Screenshot) |
+| SubPage.jpg | (Screenshot) | (Screenshot) |
 
 ## Run tests for this plugin
 
