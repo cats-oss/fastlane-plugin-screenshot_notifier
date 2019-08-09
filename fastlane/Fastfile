@@ -1,0 +1,11 @@
+lane :test do
+  screenshot_notifier(
+      gcloud_service_key_file: "fastlane/client-secret.json",
+      screenshot_bucket: "bucket-name",
+      screenshot_dir: ".screenshot",
+      github_owner: "OWNER",
+      github_repository: "REPOSITORY",
+      github_pr_number: "NUMBER",
+      github_api_token: "TOKEN"
+  )
+end
