@@ -23,14 +23,16 @@ module Fastlane
         UI.message "Post screenshots as PR comments"
         screenshot_dir = params[:screenshot_dir]
         devices = Dir.chdir("#{screenshot_dir}") do
-          Dir.glob("*").select {|path| FileTest.directory? path}.sort
+          Dir.glob("*").select { |path| FileTest.directory? path }.sort
         end
-        header = "<tr><td>Screen Name</td>\n#{devices.map {|device| "<td>#{device}</td>\n"}.inject(&:+)}</tr>"
+        header = "<tr><td>Screen Name</td>\n#{devices.map { |device| "<td>#{device}</td>\n" }.inject(&:+)}</tr>"
         rows = Dir.glob("#{screenshot_dir}/#{devices[0]}/*.jpg")
-                   .map {|path| File.basename(path)}
-                   .map {|file_name|
-                     cells = devices.map {|device|
-                       ratio = Helper.calc_aspect_ratio("#{screenshot_dir}/#{device}/#{file_name}")
+                   .map { |path| File.basename(path) }
+                   .map { |file_name|
+                     cells = devices.map { |device|
+                       file_path = "#{screenshot_dir}/#{device}/#{file_name}"
+                       next if !File.exist?(file_path)
+                       ratio = Helper.calc_aspect_ratio(file_path)
                        is_portrait = ratio >= 1.0
                        size_attr = if params[:image_length] != nil
                                      if is_portrait
