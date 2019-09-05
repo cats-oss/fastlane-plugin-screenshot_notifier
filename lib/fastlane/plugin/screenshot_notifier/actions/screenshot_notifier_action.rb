@@ -25,6 +25,11 @@ module Fastlane
         devices = Dir.chdir("#{screenshot_dir}") do
           Dir.glob("*").select { |path| FileTest.directory? path }.sort
         end
+        if devices.empty?
+          UI.message("That screenshot dir is empty")
+          return
+        end
+
         header = "<tr><td>Screen Name</td>\n#{devices.map { |device| "<td>#{device}</td>\n" }.inject(&:+)}</tr>"
         rows = Dir.glob("#{screenshot_dir}/#{devices[0]}/*.jpg")
                    .map { |path| File.basename(path) }
@@ -52,8 +57,7 @@ module Fastlane
                        "<td><img src=\"#{url}\" #{size_attr}/></td>\n"
                      }.inject(&:+)
                      "<tr><td>#{file_name}</td>\n#{cells}</tr>\n"
-                   }
-                   .inject(&:+)
+                   }.inject(&:+)
 
         table = "<table>#{header}#{rows}</table>"
         comment = if params[:fold_result]
