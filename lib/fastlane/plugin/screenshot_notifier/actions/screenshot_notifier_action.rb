@@ -36,7 +36,7 @@ module Fastlane
                    .map { |file_name|
                      cells = devices.map { |device|
                        file_path = "#{screenshot_dir}/#{device}/#{file_name}"
-                       next if !File.exist?(file_path)
+                       next "" unless !File.exist?(file_path)
                        ratio = Helper.calc_aspect_ratio(file_path)
                        is_portrait = ratio >= 1.0
                        size_attr = if params[:image_length] != nil
